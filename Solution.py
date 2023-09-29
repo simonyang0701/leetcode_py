@@ -41,6 +41,37 @@ class Solution(object):
         backtracking([], 0, 0)
         return answer
 
+    # 33
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        n = len(nums)
+        left, right = 0, n-1
+        while left <= right:
+            mid = left + (right - left) // 2
+
+            # Case 1: find target
+            if nums[mid] == target:
+                return mid
+
+            # Case 2: subarray on mid's left is sorted
+            elif nums[mid] >= nums[left]:
+                if target >= nums[left] and target < nums[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+
+            # Case 3: subarray on mid's right is sorted.
+            else:
+                if target <= nums[right] and target > nums[mid]:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+        return -1
+
     # 56
     # Time complexity: O(nlogn)
     # Space complexity: O(n)
@@ -91,7 +122,7 @@ class Solution(object):
         result.append(newInterval)
         return result
 
-    #787
+    # 787
     # Time complexity: O(N+E*K)
     # Space complexity: O(N+E*K)
     def findCheapestPrice(self, n, flights, src, dst, k):

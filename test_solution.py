@@ -54,3 +54,10 @@ def test_insert():
     res = solution.insert(intervals, newInterval)
     print(res)
     assert res == [[1,5],[6,9]]
+
+def test_search():
+    nums = [4, 5, 6, 7, 0, 1, 2]
+    target = 0
+    res = solution.search(nums, target)
+    print(res)
+    assert res == 4
