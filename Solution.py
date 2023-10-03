@@ -1,3 +1,4 @@
+import itertools
 from collections import defaultdict, deque
 
 
@@ -122,6 +123,38 @@ class Solution(object):
         result.append(newInterval)
         return result
 
+    # 227
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        pending_res = res = num = 0
+        pending_op = "+"
+
+        for char in itertools.chain(s, '+'):
+            if char.isdigit():
+                num = 10 * num + int(char)
+
+            elif char in {'+', '-', '*', '/'}:
+                if pending_op == '+':
+                    pending_res += num
+                elif pending_op == '-':
+                    pending_res -= num
+                elif pending_op == '*':
+                    pending_res *= num
+                else:
+                    pending_res = int(pending_res / num)
+
+                if char in {'+', '-'}:
+                    res += pending_res
+                    pending_res = 0
+
+                pending_op = char
+                num = 0
+
+        return res
+
     # 787
     # Time complexity: O(N+E*K)
     # Space complexity: O(N+E*K)
@@ -153,6 +186,20 @@ class Solution(object):
             dis = new_dis
 
         return dis[dst]
+
+    # 1650
+    def lowestCommonAncestor(self, p, q):
+        """
+        :type node: Node
+        :rtype: Node
+        """
+        path = set()
+        while p:
+            path.add(p)
+            p = p.parent
+        while q not in path:
+            q = q.parent
+        return q
 
     # 1654
     def minimumJumps(self, forbidden, a, b, x):

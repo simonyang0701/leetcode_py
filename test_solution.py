@@ -1,6 +1,7 @@
 import pytest
 
 from Solution import Solution
+from lib.Node import *
 
 solution = Solution()
 
@@ -61,3 +62,19 @@ def test_search():
     res = solution.search(nums, target)
     print(res)
     assert res == 4
+
+def test_calculate():
+    s = "3+2*2"
+    res = solution.calculate(s)
+    print(res)
+    assert res == 7
+
+def test_lowestCommonAncestor():
+    root = init_tree_from_array([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
+    p = getNode(root, 5)
+    q = getNode(root, 1)
+    res = solution.lowestCommonAncestor(p,q)
+    val = getNode(root, 3)
+    print("\n")
+    pretty_print(val)
+    assert res == val
