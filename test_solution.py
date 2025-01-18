@@ -39,3 +39,10 @@ def test_LRUCache():
     assert lRUCache.get(1) == -1 # Returns -1 (not found)
     assert lRUCache.get(3) == 3 # Returns 3
     assert lRUCache.get(4) == 4 # Returns 4
+
+def test_trap():
+    print()
+    height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+    output = solution.trap(height)
+    print(output)
+    assert output == 6
