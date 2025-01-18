@@ -41,8 +41,18 @@ def test_LRUCache():
     assert lRUCache.get(4) == 4 # Returns 4
 
 def test_trap():
-    print()
     height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
     output = solution.trap(height)
     print(output)
     assert output == 6
+
+def test_numIslands():
+    grid = [
+      ["1","1","1","1","0"],
+      ["1","1","0","1","0"],
+      ["1","1","0","0","0"],
+      ["0","0","0","0","0"]
+    ]
+    output = solution.numIslands(grid)
+    print(output)
+    assert output == 1

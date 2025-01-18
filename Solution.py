@@ -1,6 +1,7 @@
 from lib.ListNode import *
 from lib.DoublyListNode import *
 
+
 class Solution(object):
     # 1
     def twoSum(self, nums, target):
@@ -17,8 +18,9 @@ class Solution(object):
             hashMap[nums[i]] = i
 
         return []
-    # Time complexity: O(n).
-    # Space complexity: O(n).
+
+    # Time complexity: O(n)
+    # Space complexity: O(n)
 
     # 2
     def addTwoNumbers(self, l1, l2):
@@ -66,6 +68,9 @@ class Solution(object):
                 right -= 1
         return ans
 
+    # Time complexity: O(n)
+    # Space complexity: O(1)
+
     # 88
     def merge(self, nums1, m, nums2, n):
         """
@@ -77,7 +82,7 @@ class Solution(object):
         """
         p1 = m - 1
         p2 = n - 1
-        for p in range(m+n-1, -1, -1):
+        for p in range(m + n - 1, -1, -1):
             if p2 < 0:
                 break
             if p1 >= 0 and nums1[p1] > nums2[p2]:
@@ -86,6 +91,9 @@ class Solution(object):
             else:
                 nums1[p] = nums2[p2]
                 p2 -= 1
+
+    # Time complexity: O(n + m)
+    # Space complexity: O(1)
 
     # 168
     class LRUCache(object):
@@ -143,3 +151,33 @@ class Solution(object):
         def remove(self, node):
             node.prev.next = node.next
             node.next.prev = node.prev
+
+    # 200
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        if not grid:
+            return 0
+
+        num = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == '1':
+                    dfs(grid, i, j)
+                    num += 1
+        return num
+
+def dfs(grid, r, c):
+    if r < 0 or r > len(grid) - 1 or c < 0 or c > len(grid[0]) - 1 or grid[r][c] != "1":
+        return
+
+    grid[r][c] = "0"
+    dfs( grid, r - 1, c)
+    dfs( grid, r + 1, c)
+    dfs( grid, r, c - 1)
+    dfs(grid, r, c + 1)
+
+    # Time complexity: O(M×N)
+    # Space complexity: O(M×N)
