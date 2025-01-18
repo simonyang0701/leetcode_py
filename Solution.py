@@ -1,4 +1,5 @@
 from lib.ListNode import *
+from lib.DoublyListNode import *
 
 class Solution(object):
     # 1
@@ -65,3 +66,60 @@ class Solution(object):
             else:
                 nums1[p] = nums2[p2]
                 p2 -= 1
+
+    # 168
+    class LRUCache(object):
+
+        def __init__(self, capacity):
+            """
+            :type capacity: int
+            """
+            self.capacity = capacity
+            self.dic = {}
+            self.head = ListNode(-1, -1)
+            self.tail = ListNode(-1, -1)
+            self.head.next = self.tail
+            self.tail.prev = self.head
+
+        def get(self, key):
+            """
+            :type key: int
+            :rtype: int
+            """
+            if key not in self.dic:
+                return -1
+
+            node = self.dic[key]
+            self.remove(node)
+            self.add(node)
+            return node.val
+
+        def put(self, key, value):
+            """
+            :type key: int
+            :type value: int
+            :rtype: None
+            """
+            if key in self.dic:
+                old_node = self.dic[key]
+                self.remove(old_node)
+
+            node = DoublyListNode(key, value)
+            self.dic[key] = node
+            self.add(node)
+
+            if len(self.dic) > self.capacity:
+                node_to_delete = self.head.next
+                self.remove(node_to_delete)
+                del self.dic[node_to_delete.key]
+
+        def add(self, node):
+            previous_end = self.tail.prev
+            previous_end.next = node
+            node.prev = previous_end
+            node.next = self.tail
+            self.tail.prev = node
+
+        def remove(self, node):
+            node.prev.next = node.next
+            node.next.prev = node.prev

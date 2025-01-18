@@ -26,3 +26,16 @@ def test_merge():
     solution.merge(nums1, m, nums2, n)
     print(nums1)
     assert nums1 == [1,2,2,3,5,6]
+
+def test_LRUCache():
+    lRUCache = solution.LRUCache(2)
+
+    lRUCache.put(1, 1) # Cache is {1=1}
+    lRUCache.put(2, 2) # Cache is {1=1, 2=2}
+    assert lRUCache.get(1) == 1 # Returns 1
+    lRUCache.put(3, 3) # Evicts key 2, cache is {1=1, 3=3}
+    assert lRUCache.get(2) == -1 # Returns -1 (not found)
+    lRUCache.put(4, 4) # Evicts key 1, cache is {4=4, 3=3}
+    assert lRUCache.get(1) == -1 # Returns -1 (not found)
+    assert lRUCache.get(3) == 3 # Returns 3
+    assert lRUCache.get(4) == 4 # Returns 4
