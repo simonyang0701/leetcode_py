@@ -1,8 +1,15 @@
 import pytest
 from Solution import Solution
 from lib.ListNode import *
+from lib.TreeNode import *
 
 solution = Solution()
+
+def add_newline_before(func):
+    def wrapper(*args, **kwargs):
+        print()
+        return func(*args, **kwargs)
+    return wrapper
 
 def test_twoSum():
     nums = [2, 7, 11, 15]
@@ -87,3 +94,96 @@ def test_merge2():
     output = solution.merge2(intervals)
     print(output)
     assert output == [[1,6],[8,10],[15,18]]
+
+def test_numberToWords():
+    num = 123
+    output = solution.numberToWords(num)
+    print(output)
+    assert output == "One Hundred Twenty Three"
+
+def test_mergeAlternately():
+    word1 = "abc"
+    word2 = "pqr"
+    output = solution.mergeAlternately(word1, word2)
+    assert output == "apbqcr"
+
+def test_calculate():
+    s = "3+2*2"
+    output = solution.calculate(s)
+    assert output == 7
+
+@add_newline_before
+def test_verticalOrder():
+    root = list_to_tree([3, 9, 20, None, None, 15, 7])
+    print_tree(root)
+    output = solution.verticalOrder(root)
+    print(output)
+    assert output == [[9],[3,15],[20],[7]]
+
+@add_newline_before
+def test_isPalindrome():
+    x = 121
+    output = solution.isPalindrome(x)
+    print(output)
+    assert output == True
+
+@add_newline_before
+def test_lowestCommonAncestor():
+    root = list_to_tree([3,5,1,6,2,0,8,None,None,7,4])
+    p = root.left
+    q = root.right
+    print_tree(p)
+    print_tree(q)
+    output = solution.lowestCommonAncestor(p, q)
+    print_tree(output)
+    assert output.val == 3
+
+
+@add_newline_before
+def test_lowestCommonAncestor1():
+    root = list_to_tree([6, 2, 8, 0, 4, 7, 9, None, None, 3, 5])
+    p = root.left
+    q = root.right
+    print_tree(root)
+    output = solution.lowestCommonAncestor1(root, p, q)
+    print_tree(output)
+    assert output.val == 6
+
+@add_newline_before
+def test_lowestCommonAncestor2():
+    root = list_to_tree([3,5,1,6,2,0,8,None,None,7,4])
+    p = root.left
+    q = root.right
+    print_tree(root)
+    output = solution.lowestCommonAncestor2(root, p, q)
+    print_tree(output)
+    assert output.val == 3
+
+@add_newline_before
+def test_lcaDeepestLeaves():
+    root = list_to_tree([3,5,1,6,2,0,8,None,None,7,4])
+    print_tree(root)
+    output = solution.lcaDeepestLeaves(root)
+    print_tree(output)
+    assert output.val == 2
+
+@add_newline_before
+def test_lowestCommonAncestor3():
+    root = list_to_tree([3,5,1,6,2,0,8,None,None,7,4])
+    p = root.left
+    q = root.right
+    print_tree(root)
+    output = solution.lowestCommonAncestor3(root, p, q)
+    print_tree(output)
+    assert output.val == 3
+
+@add_newline_before
+def test_lowestCommonAncestor4():
+    root = list_to_tree([3,5,1,6,2,0,8,None,None,7,4])
+    p = root.left.right.left
+    q = root.left.right.right
+    print_tree(p)
+    print_tree(q)
+    output = solution.lowestCommonAncestor4(root, [p, q])
+    print_tree(output)
+    assert output.val == 2

@@ -1,5 +1,9 @@
+import math
+
 from lib.ListNode import *
 from lib.DoublyListNode import *
+from collections import defaultdict, deque
+from lib.TreeNode import *
 
 
 class Solution(object):
@@ -80,6 +84,22 @@ class Solution(object):
     # Time complexity: O(n2)
     # Space complexity: O(1)
 
+    # 9
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        str_x = str(x)
+
+        for i in range(len(str_x) // 2):
+            if str_x[i] != str_x[len(str_x) - 1 - i]:
+                return False
+        return True
+
+    # Time complexity: O(n)
+    # Space complexity: O(n)
+
     # 42
     def trap(self, height):
         """
@@ -121,6 +141,9 @@ class Solution(object):
                 ans[-1][1] = max(ans[-1][1], interval[1])
 
         return ans
+
+    # Time complexity: O(nlogn)
+    # Space complexity: O(logN)
 
     # 88
     def merge(self, nums1, m, nums2, n):
@@ -253,6 +276,174 @@ class Solution(object):
     # Time complexity: O(M×N)
     # Space complexity: O(M×N)
 
+    # 227
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        num = 0
+        stack = []
+        pre_op = '+'
+        s+='+'
+        for c in s:
+            print(f"c: {c}")
+            if c.isdigit():
+                num = num * 10 + int(c)
+            elif c == ' ':
+                continue
+            else:
+                if pre_op == '+':
+                    stack.append(num)
+                elif pre_op == '-':
+                    stack.append(-num)
+                elif pre_op == '*':
+                    stack.append(stack.pop() * num)
+                    print(f"stack: {stack}")
+                elif pre_op == '/':
+                    stack.append(math.trunc(stack.pop() / num))
+                num = 0
+                pre_op = c
+
+        return sum(stack)
+
+    # 235
+    def lowestCommonAncestor1(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        node = root
+
+        while node:
+            if p.val > node.val and q.val > node.val:
+                node = node.right
+            elif p.val < node.val and q.val < node.val:
+                node = node.left
+            else:
+                return node
+
+    # Time Complexity: O(N)
+    # Space Complexity: O(1)
+
+    # 236
+    def lowestCommonAncestor2(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        self.ans = None
+        def recurse_tree(node):
+            if not node:
+                return False
+            left = recurse_tree(node.left)
+            right = recurse_tree(node.right)
+
+            if node == p:
+                mid = True
+            elif node == q:
+                mid = True
+            else:
+                mid = False
+
+            print(f"mid: {mid}, node.val: {node.val}, left: {left}, right: {right}")
+
+            if (mid and left) or (mid and right) or (left and right):
+                self.ans = node
+
+            return mid or left or right
+
+        recurse_tree(root)
+
+        return self.ans
+    # Time Complexity: O(N)
+    # Space Complexity: O(N)
+
+
+    # 273
+    def numberToWords(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        if num == 0:
+            return "Zero"
+
+        bigString = ["Thousand", "Million", "Billion"]
+        result = self.numberToWordsHelper(num % 1000)
+        num //= 1000
+
+        for i in range(len(bigString)):
+            if num > 0 and num % 1000 > 0:
+                result = self.numberToWordsHelper(num % 1000) + bigString[i] + " " + result
+            num //= 1000
+
+        return result.strip()
+
+    def numberToWordsHelper(self, num):
+        digitString = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+        teenString = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen",
+                      "Nineteen"]
+        tenString = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+
+        result = ""
+        if num > 99:
+            result += digitString[num // 100] + " Hundred "
+
+        num %= 100
+        # handle 10-19
+        if num < 20 and num > 9:
+            result += teenString[num - 10] + " "
+        # handle 20-99
+        else:
+            if num >= 20:
+                result += tenString[num // 10] + " "
+            num %= 10
+            if num > 0:
+                result += digitString[num] + " "
+
+        return result
+
+    # Time Complexity: O(n)
+    # Space Complexity: O(1)
+
+    # 314
+    def verticalOrder(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: List[List[int]]
+        """
+        columnTable = defaultdict(list)
+        queue = deque([(root, 0)])
+
+        while queue:
+            node, column = queue.popleft()
+
+            if node is not None:
+                columnTable[column].append(node.val)
+
+                queue.append((node.left, column - 1))
+                queue.append((node.right, column + 1))
+
+        print(f"columnTable: {columnTable}")
+        print(f"sorted(columnTable.keys()): {sorted(columnTable.keys())}")
+
+        result = []
+        sorted_columns = sorted(columnTable.keys())
+
+        for column in sorted_columns:
+            result.append(columnTable[column])
+
+        return result
+        # return [columnTable[x] for x in sorted(columnTable.keys())]
+
+    # Time Complexity: O(NlogN)
+    # Space Complexity: O(N)
+
     # 408
     def validWordAbbreviation(self, word, abbr):
         """
@@ -281,6 +472,36 @@ class Solution(object):
 
     # Time complexity: O(n)
     # Space complexity: O(1)
+
+    # 1123
+    def lcaDeepestLeaves(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: Optional[TreeNode]
+        """
+        def height(node):
+            if not node:
+                return 0
+            return max(height(node.left), height(node.right)) + 1
+
+        def dfs(node):
+            if not node:
+                return None
+            left = height(node.left)
+            right = height(node.right)
+
+            if left == right:
+                return node
+            if left > right:
+                return dfs(node.left)
+            if left < right:
+                return dfs(node.right)
+
+        return dfs(root)
+
+    # Time complexity: O(n2)
+    # Space complexity: O(n)
+
 
     # 1249
     def minRemoveToMakeValid(self, s):
@@ -314,3 +535,117 @@ class Solution(object):
     # Time complexity: O(n)
     # Space complexity: O(n)
 
+    # 1644
+    def lowestCommonAncestor3(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        self.ans = None
+        self.p_found = False
+        self.q_found = False
+        def recurse_tree(node):
+            if not node:
+                return False
+            left = recurse_tree(node.left)
+            right = recurse_tree(node.right)
+
+            if node == p:
+                mid = True
+                self.p_found = True
+            elif node == q:
+                mid = True
+                self.q_found = True
+            else:
+                mid = False
+
+            print(f"mid: {mid}, node.val: {node.val}, left: {left}, right: {right}, p_found: {self.p_found}, q_found: {self.q_found}")
+
+            if (mid and left) or (mid and right) or (left and right):
+                self.ans = node
+
+            return mid or left or right
+
+        recurse_tree(root)
+
+        if self.p_found and self.q_found:
+            return self.ans
+        else:
+            return None
+
+    # Time Complexity: O(N)
+    # Space Complexity: O(N)
+
+
+    # 1650
+    def lowestCommonAncestor(self, p, q):
+        """
+        :type node: Node
+        :rtype: Node
+        """
+        ancestors = set()
+
+        def dfs(node):
+            if not node:
+                return None
+            if node in ancestors:
+                return node
+            ancestors.add(node)
+            return dfs(node.parent)
+
+        a = dfs(p)
+        b = dfs(q)
+        return a or b
+
+    # Time Complexity: O(log(N))
+    # Space Complexity: O(log(N))
+
+    # 1676
+    def lowestCommonAncestor4(self, root, nodes):
+        """
+        :type root: TreeNode
+        :type nodes: List[TreeNode]
+        """
+        nodes = set(nodes)
+        def recurse_tree(node):
+            if not node:
+                return None
+            if node in nodes:
+                return node
+
+            left = recurse_tree(node.left)
+            right = recurse_tree(node.right)
+
+            if left and right:
+                return node
+            elif left:
+                return left
+            else:
+                return right
+
+        return recurse_tree(root)
+
+    # Time Complexity: O(N)
+    # Space Complexity: O(N)
+
+    # 1768
+    def mergeAlternately(self, word1, word2):
+        """
+        :type word1: str
+        :type word2: str
+        :rtype: str
+        """
+        result = []
+        n = len(word1) + len(word2) + 1
+        for i in range(n):
+            if i < len(word1):
+                result.append(word1[i])
+            if i < len(word2):
+                result.append(word2[i])
+
+        return "".join(result)
+
+    # Time complexity: O(m + n)
+    # Space complexity: O(1)
