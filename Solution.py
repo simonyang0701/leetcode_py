@@ -48,6 +48,38 @@ class Solution(object):
     # Time complexity: O(max(m, n))
     # Space complexity: O(1)
 
+    # 5
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        def expand(i, j):
+            left, right = i, j
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return right - left - 1
+
+        res = [0 ,0]
+        for i in range(len(s)):
+            odd_length = expand(i, i)
+            if odd_length > res[1] - res[0] + 1:
+                center = odd_length // 2
+                res = [i - center, i + center]
+
+            even_length = expand(i, i + 1)
+            if even_length > res[1] - res[0] + 1:
+                center = (even_length // 2) - 1
+                res = [i - center, i + 1 + center]
+
+        print(f"res: {res}")
+
+        return s[res[0]: res[1] + 1]
+
+    # Time complexity: O(n2)
+    # Space complexity: O(1)
+
     # 42
     def trap(self, height):
         """

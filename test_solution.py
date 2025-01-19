@@ -63,3 +63,9 @@ def test_validWordAbbreviation():
     output = solution.validWordAbbreviation(word, abbr)
     print(output)
     assert output == True
+
+def test_longestPalindrome():
+    s = "babad"
+    output = solution.longestPalindrome(s)
+    print(output)
+    assert output == "bab"
