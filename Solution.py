@@ -127,6 +127,26 @@ class Solution(object):
     # Time complexity: O(n + m)
     # Space complexity: O(1)
 
+    # 121
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        min_price = float("inf")
+        max_profit = 0
+        for i in range(len(prices)):
+            if prices[i] < min_price:
+                min_price = prices[i]
+            elif prices[i] - min_price > max_profit:
+                max_profit = prices[i] - min_price
+
+        return max_profit
+
+    # Time complexity: O(n)
+    # Space complexity: O(1)
+
+
     # 168
     class LRUCache(object):
 
@@ -271,4 +291,7 @@ class Solution(object):
                 string_builder.append(c)
 
         return "".join(string_builder)
+
+    # Time complexity: O(n)
+    # Space complexity: O(n)
 

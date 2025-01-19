@@ -75,3 +75,9 @@ def test_minRemoveToMakeValid():
     output = solution.minRemoveToMakeValid(s)
     print(output)
     assert output == "lee(t(c)o)de"
+
+def test_maxProfit():
+    prices = [7, 1, 5, 3, 6, 4]
+    output = solution.maxProfit(prices)
+    print(output)
+    assert output == 5
