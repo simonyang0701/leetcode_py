@@ -69,3 +69,9 @@ def test_longestPalindrome():
     output = solution.longestPalindrome(s)
     print(output)
     assert output == "bab"
+
+def test_minRemoveToMakeValid():
+    s = "lee(t(c)o)de)"
+    output = solution.minRemoveToMakeValid(s)
+    print(output)
+    assert output == "lee(t(c)o)de"

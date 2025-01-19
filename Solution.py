@@ -243,3 +243,32 @@ class Solution(object):
     # Time complexity: O(n)
     # Space complexity: O(1)
 
+    # 1249
+    def minRemoveToMakeValid(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+
+        res = set()
+        stack = []
+
+        for i,c in enumerate(s):
+            if c not in "()":
+                continue
+            if c == "(":
+                stack.append(i)
+            elif not stack:
+                res.add(i)
+            else:
+                stack.pop()
+
+        res = res.union(set(stack))
+        string_builder = []
+
+        for i, c in enumerate(s):
+            if i not in res:
+                string_builder.append(c)
+
+        return "".join(string_builder)
+
