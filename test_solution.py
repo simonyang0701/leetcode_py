@@ -56,3 +56,10 @@ def test_numIslands():
     output = solution.numIslands(grid)
     print(output)
     assert output == 1
+
+def test_validWordAbbreviation():
+    word = "internationalization"
+    abbr = "i5a11o1"
+    output = solution.validWordAbbreviation(word, abbr)
+    print(output)
+    assert output == True

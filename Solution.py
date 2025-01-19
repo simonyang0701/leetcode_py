@@ -165,19 +165,49 @@ class Solution(object):
         for i in range(len(grid)):
             for j in range(len(grid[0])):
                 if grid[i][j] == '1':
-                    dfs(grid, i, j)
+                    self.dfs(grid, i, j)
                     num += 1
         return num
 
-def dfs(grid, r, c):
-    if r < 0 or r > len(grid) - 1 or c < 0 or c > len(grid[0]) - 1 or grid[r][c] != "1":
-        return
+    def dfs(self, grid, r, c):
+        if r < 0 or r > len(grid) - 1 or c < 0 or c > len(grid[0]) - 1 or grid[r][c] != "1":
+            return
 
-    grid[r][c] = "0"
-    dfs( grid, r - 1, c)
-    dfs( grid, r + 1, c)
-    dfs( grid, r, c - 1)
-    dfs(grid, r, c + 1)
+        grid[r][c] = "0"
+        self.dfs(grid, r - 1, c)
+        self.dfs(grid, r + 1, c)
+        self.dfs(grid, r, c - 1)
+        self.dfs(grid, r, c + 1)
 
     # Time complexity: O(M×N)
     # Space complexity: O(M×N)
+
+    # 408
+    def validWordAbbreviation(self, word, abbr):
+        """
+        :type word: str
+        :type abbr: str
+        :rtype: bool
+        """
+        i, j = 0, 0
+        m, n = len(word), len(abbr)
+        while i < m and j < n:
+            if word[i] == abbr[j]:
+                i += 1
+                j += 1
+            elif abbr[j] == "0":
+                return False
+            elif abbr[j].isnumeric():
+                k = j
+                while k < n and abbr[k].isnumeric():
+                    k += 1
+                num = int(abbr[j:k])
+                i += num
+                j = k
+            else:
+                return False
+        return i == m and j == n
+
+    # Time complexity: O(n)
+    # Space complexity: O(1)
+
