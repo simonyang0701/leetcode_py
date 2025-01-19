@@ -81,3 +81,9 @@ def test_maxProfit():
     output = solution.maxProfit(prices)
     print(output)
     assert output == 5
+
+def test_merge2():
+    intervals = [[1, 3], [2, 6], [8, 10], [15, 18]]
+    output = solution.merge2(intervals)
+    print(output)
+    assert output == [[1,6],[8,10],[15,18]]

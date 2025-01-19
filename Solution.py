@@ -103,6 +103,25 @@ class Solution(object):
     # Time complexity: O(n)
     # Space complexity: O(1)
 
+    # 56
+    def merge2(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        intervals = sorted(intervals)
+
+        ans = []
+
+        for interval in intervals:
+            print(f"interval: {interval}, ans: {ans}")
+            if not ans or ans[-1][1] < interval[0]:
+                ans.append(interval)
+            else:
+                ans[-1][1] = max(ans[-1][1], interval[1])
+
+        return ans
+
     # 88
     def merge(self, nums1, m, nums2, n):
         """
