@@ -187,3 +187,47 @@ def test_lowestCommonAncestor4():
     output = solution.lowestCommonAncestor4(root, [p, q])
     print_tree(output)
     assert output.val == 2
+
+@add_newline_before
+def test_lengthOfLongestSubstring():
+    s = "abcabcbb"
+    output = solution.lengthOfLongestSubstring(s)
+    print(output)
+    assert output == 3
+
+@add_newline_before
+def test_minMeetingRooms():
+    intervals = [[0, 30], [5, 10], [15, 20]]
+    output = solution.minMeetingRooms(intervals)
+    print(output)
+    assert output == 2
+
+@add_newline_before
+def test_canAttendMeetings():
+    intervals = [[0, 30], [5, 10], [15, 20]]
+    output = solution.canAttendMeetings(intervals)
+    print(output)
+    assert output == False
+
+@add_newline_before
+def test_isValid():
+    s = "()"
+    output = solution.isValid(s)
+    assert output == True
+
+@add_newline_before
+def test_pickIndex():
+    s = Solution.SolutionPickIndex([1])
+    output = s.pickIndex()
+    print(output)
+    assert output == 0
+
+@add_newline_before
+def test_spiralMatrixIII():
+    rows = 1
+    cols = 4
+    rStart = 0
+    cStart = 0
+    output = solution.spiralMatrixIII(rows, cols, rStart, cStart)
+    print(output)
+    assert output == [[0,0],[0,1],[0,2],[0,3]]

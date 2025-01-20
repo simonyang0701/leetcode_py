@@ -1,4 +1,5 @@
 import math
+import random
 
 from lib.ListNode import *
 from lib.DoublyListNode import *
@@ -52,12 +53,36 @@ class Solution(object):
     # Time complexity: O(max(m, n))
     # Space complexity: O(1)
 
+    # 3
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        max_length = 0
+        left = 0
+        last_seen = {}
+
+        for right, c in enumerate(s):
+            if c in last_seen and last_seen[c] >= left:
+                left = last_seen[c] + 1
+
+            max_length = max(max_length, right - left + 1)
+            last_seen[c] = right
+            print(f"c: {c}, left: {left}, last_seen: {last_seen}, max_length: {max_length}")
+
+        return max_length
+
+    # Time complexity: O(n2)
+    # Space complexity: O(min(m,n))
+
     # 5
     def longestPalindrome(self, s):
         """
         :type s: str
         :rtype: str
         """
+
         def expand(i, j):
             left, right = i, j
             while left >= 0 and right < len(s) and s[left] == s[right]:
@@ -65,7 +90,7 @@ class Solution(object):
                 right += 1
             return right - left - 1
 
-        res = [0 ,0]
+        res = [0, 0]
         for i in range(len(s)):
             odd_length = expand(i, i)
             if odd_length > res[1] - res[0] + 1:
@@ -96,6 +121,29 @@ class Solution(object):
             if str_x[i] != str_x[len(str_x) - 1 - i]:
                 return False
         return True
+
+    # Time complexity: O(n)
+    # Space complexity: O(n)
+
+    # 20
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        stack = []
+        mapping = {")": "(", "}": "{", "]": "["}
+
+        for char in s:
+            if char in mapping.values():
+                stack.append(char)
+            elif char in mapping.keys():
+                if not stack or mapping[char] != stack.pop():
+                    return False
+        if len(stack) <= 0:
+            return True
+        else:
+            return False
 
     # Time complexity: O(n)
     # Space complexity: O(n)
@@ -187,7 +235,6 @@ class Solution(object):
 
     # Time complexity: O(n)
     # Space complexity: O(1)
-
 
     # 168
     class LRUCache(object):
@@ -285,7 +332,7 @@ class Solution(object):
         num = 0
         stack = []
         pre_op = '+'
-        s+='+'
+        s += '+'
         for c in s:
             print(f"c: {c}")
             if c.isdigit():
@@ -337,6 +384,7 @@ class Solution(object):
         :rtype: TreeNode
         """
         self.ans = None
+
         def recurse_tree(node):
             if not node:
                 return False
@@ -360,9 +408,52 @@ class Solution(object):
         recurse_tree(root)
 
         return self.ans
+
     # Time Complexity: O(N)
     # Space Complexity: O(N)
 
+    # 252
+    def canAttendMeetings(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: bool
+        """
+        intervals.sort()
+        for i in range(len(intervals) - 1):
+            if intervals[i][1] > intervals[i + 1][0]:
+                return False
+        return True
+
+    # Time complexity: O(nlogn)
+    # Space complexity: O(1)
+
+    # 253
+    def minMeetingRooms(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: int
+        """
+        if not intervals:
+            return 0
+
+        used_rooms = 0
+
+        start_timings = sorted([i[0] for i in intervals])
+        end_timings = sorted(i[1] for i in intervals)
+        print(f"start_timings: {start_timings}, end_timings: {end_timings}")
+
+        end_pointer = 0
+
+        for i in range(len(intervals)):
+            if start_timings[i] < end_timings[end_pointer]:
+                used_rooms += 1
+            else:
+                end_pointer += 1
+
+        return used_rooms
+
+    # Time Complexity: O(NlogN)
+    # Space Complexity: O(N)
 
     # 273
     def numberToWords(self, num):
@@ -473,12 +564,73 @@ class Solution(object):
     # Time complexity: O(n)
     # Space complexity: O(1)
 
+    # 528
+    class SolutionPickIndex(object):
+
+        def __init__(self, w):
+            """
+            :type w: List[int]
+            """
+            print(f"w: {w}")
+            self.prefix_sums = []
+            prefix_sum = 0
+            for weight in w:
+                prefix_sum += weight
+                self.prefix_sums.append(prefix_sum)
+
+            print(f"prefix_sums: {self.prefix_sums}, prefix_sum: {prefix_sum}")
+            self.total_sum = prefix_sum
+
+        def pickIndex(self):
+            """
+            :rtype: int
+            """
+            target = self.total_sum * random.random()
+            for i, prefix_sum in enumerate(self.prefix_sums):
+                if target < prefix_sum:
+                    return i
+
+    # 885
+    def spiralMatrixIII(self, rows, cols, rStart, cStart):
+        """
+        :type rows: int
+        :type cols: int
+        :type rStart: int
+        :type cStart: int
+        :rtype: List[List[int]]
+        """
+        dir = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+        traversed = []
+
+        # Initial step size is 1, value of d represents the current direction.
+        step = 1
+        direction = 0
+        while len(traversed) < rows * cols:
+            # direction = 0 -> East, direction = 1 -> South
+            # direction = 2 -> West, direction = 3 -> North
+            for _ in range(2):
+                for _ in range(step):
+                    # Validate the current position
+                    if rStart >= 0 and rStart < rows and cStart >= 0 and cStart < cols:
+                        traversed.append([rStart, cStart])
+                    # Make changes to the current position.
+                    rStart += dir[direction][0]
+                    cStart += dir[direction][1]
+
+                direction = (direction + 1) % 4
+            step += 1
+        return traversed
+
+    # Time complexity: O(max(rows, cols)2)
+    # Space complexity: O(rows⋅cols)
+
     # 1123
     def lcaDeepestLeaves(self, root):
         """
         :type root: Optional[TreeNode]
         :rtype: Optional[TreeNode]
         """
+
         def height(node):
             if not node:
                 return 0
@@ -502,7 +654,6 @@ class Solution(object):
     # Time complexity: O(n2)
     # Space complexity: O(n)
 
-
     # 1249
     def minRemoveToMakeValid(self, s):
         """
@@ -513,7 +664,7 @@ class Solution(object):
         res = set()
         stack = []
 
-        for i,c in enumerate(s):
+        for i, c in enumerate(s):
             if c not in "()":
                 continue
             if c == "(":
@@ -546,6 +697,7 @@ class Solution(object):
         self.ans = None
         self.p_found = False
         self.q_found = False
+
         def recurse_tree(node):
             if not node:
                 return False
@@ -561,7 +713,8 @@ class Solution(object):
             else:
                 mid = False
 
-            print(f"mid: {mid}, node.val: {node.val}, left: {left}, right: {right}, p_found: {self.p_found}, q_found: {self.q_found}")
+            print(
+                f"mid: {mid}, node.val: {node.val}, left: {left}, right: {right}, p_found: {self.p_found}, q_found: {self.q_found}")
 
             if (mid and left) or (mid and right) or (left and right):
                 self.ans = node
@@ -577,7 +730,6 @@ class Solution(object):
 
     # Time Complexity: O(N)
     # Space Complexity: O(N)
-
 
     # 1650
     def lowestCommonAncestor(self, p, q):
@@ -609,6 +761,7 @@ class Solution(object):
         :type nodes: List[TreeNode]
         """
         nodes = set(nodes)
+
         def recurse_tree(node):
             if not node:
                 return None
