@@ -17,6 +17,8 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
+        # Time complexity: O(n)
+        # Space complexity: O(n)
         hashMap = {}
         for i in range(len(nums)):
             complement = target - nums[i]
@@ -26,9 +28,6 @@ class Solution(object):
 
         return []
 
-    # Time complexity: O(n)
-    # Space complexity: O(n)
-
     # 2
     def addTwoNumbers(self, l1, l2):
         """
@@ -36,6 +35,8 @@ class Solution(object):
         :type l2: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
+        # Time complexity: O(max(m, n))
+        # Space complexity: O(1)
         dummy = ListNode(0)
         curr = dummy
         carry = 0
@@ -52,15 +53,14 @@ class Solution(object):
 
         return dummy.next
 
-    # Time complexity: O(max(m, n))
-    # Space complexity: O(1)
-
     # 3
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
         :rtype: int
         """
+        # Time complexity: O(n2)
+        # Space complexity: O(min(m,n))
         max_length = 0
         left = 0
         last_seen = {}
@@ -75,15 +75,14 @@ class Solution(object):
 
         return max_length
 
-    # Time complexity: O(n2)
-    # Space complexity: O(min(m,n))
-
     # 5
     def longestPalindrome(self, s):
         """
         :type s: str
         :rtype: str
         """
+        # Time complexity: O(n2)
+        # Space complexity: O(1)
 
         def expand(i, j):
             left, right = i, j
@@ -108,15 +107,14 @@ class Solution(object):
 
         return s[res[0]: res[1] + 1]
 
-    # Time complexity: O(n2)
-    # Space complexity: O(1)
-
     # 9
     def isPalindrome(self, x):
         """
         :type x: int
         :rtype: bool
         """
+        # Time complexity: O(n)
+        # Space complexity: O(n)
         str_x = str(x)
 
         for i in range(len(str_x) // 2):
@@ -124,15 +122,14 @@ class Solution(object):
                 return False
         return True
 
-    # Time complexity: O(n)
-    # Space complexity: O(n)
-
     # 20
     def isValid(self, s):
         """
         :type s: str
         :rtype: bool
         """
+        # Time complexity: O(n)
+        # Space complexity: O(n)
         stack = []
         mapping = {")": "(", "}": "{", "]": "["}
 
@@ -147,15 +144,14 @@ class Solution(object):
         else:
             return False
 
-    # Time complexity: O(n)
-    # Space complexity: O(n)
-
     # 42
     def trap(self, height):
         """
         :type height: List[int]
         :rtype: int
         """
+        # Time complexity: O(n)
+        # Space complexity: O(1)
         left, right = 0, len(height) - 1
         ans = 0
         left_max, right_max = 0, 0
@@ -170,15 +166,14 @@ class Solution(object):
                 right -= 1
         return ans
 
-    # Time complexity: O(n)
-    # Space complexity: O(1)
-
     # 56
     def merge2(self, intervals):
         """
         :type intervals: List[List[int]]
         :rtype: List[List[int]]
         """
+        # Time complexity: O(nlogn)
+        # Space complexity: O(logN)
         intervals = sorted(intervals)
 
         ans = []
@@ -192,9 +187,6 @@ class Solution(object):
 
         return ans
 
-    # Time complexity: O(nlogn)
-    # Space complexity: O(logN)
-
     # 88
     def merge(self, nums1, m, nums2, n):
         """
@@ -204,6 +196,8 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
+        # Time complexity: O(n + m)
+        # Space complexity: O(1)
         p1 = m - 1
         p2 = n - 1
         for p in range(m + n - 1, -1, -1):
@@ -216,15 +210,14 @@ class Solution(object):
                 nums1[p] = nums2[p2]
                 p2 -= 1
 
-    # Time complexity: O(n + m)
-    # Space complexity: O(1)
-
     # 121
     def maxProfit(self, prices):
         """
         :type prices: List[int]
         :rtype: int
         """
+        # Time complexity: O(n)
+        # Space complexity: O(1)
         min_price = float("inf")
         max_profit = 0
         for i in range(len(prices)):
@@ -234,9 +227,6 @@ class Solution(object):
                 max_profit = prices[i] - min_price
 
         return max_profit
-
-    # Time complexity: O(n)
-    # Space complexity: O(1)
 
     # 168
     class LRUCache(object):
@@ -301,6 +291,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: str
         """
+        # Time Complexity: O(nlogn)
+        # Space Complexity: O(n + S)
 
         def compare(x, y):
             if x + y > y + x:
@@ -316,15 +308,14 @@ class Solution(object):
         largest_num = ''.join(nums_str).lstrip('0')
         return largest_num or '0'
 
-    # Time Complexity: O(nlogn)
-    # Space Complexity: O(n + S)
-
     # 200
     def numIslands(self, grid):
         """
         :type grid: List[List[str]]
         :rtype: int
         """
+        # Time complexity: O(M×N)
+        # Space complexity: O(M×N)
         if not grid:
             return 0
 
@@ -345,9 +336,6 @@ class Solution(object):
         self.dfs(grid, r + 1, c)
         self.dfs(grid, r, c - 1)
         self.dfs(grid, r, c + 1)
-
-    # Time complexity: O(M×N)
-    # Space complexity: O(M×N)
 
     # 227
     def calculate(self, s):
@@ -388,6 +376,8 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
+        # Time Complexity: O(N)
+        # Space Complexity: O(1)
         node = root
 
         while node:
@@ -398,9 +388,6 @@ class Solution(object):
             else:
                 return node
 
-    # Time Complexity: O(N)
-    # Space Complexity: O(1)
-
     # 236
     def lowestCommonAncestor2(self, root, p, q):
         """
@@ -409,6 +396,8 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
+        # Time Complexity: O(N)
+        # Space Complexity: O(N)
         self.ans = None
 
         def recurse_tree(node):
@@ -435,23 +424,19 @@ class Solution(object):
 
         return self.ans
 
-    # Time Complexity: O(N)
-    # Space Complexity: O(N)
-
     # 252
     def canAttendMeetings(self, intervals):
         """
         :type intervals: List[List[int]]
         :rtype: bool
         """
+        # Time complexity: O(nlogn)
+        # Space complexity: O(1)
         intervals.sort()
         for i in range(len(intervals) - 1):
             if intervals[i][1] > intervals[i + 1][0]:
                 return False
         return True
-
-    # Time complexity: O(nlogn)
-    # Space complexity: O(1)
 
     # 253
     def minMeetingRooms(self, intervals):
@@ -459,6 +444,8 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: int
         """
+        # Time Complexity: O(NlogN)
+        # Space Complexity: O(N)
         if not intervals:
             return 0
 
@@ -477,9 +464,6 @@ class Solution(object):
                 end_pointer += 1
 
         return used_rooms
-
-    # Time Complexity: O(NlogN)
-    # Space Complexity: O(N)
 
     # 273
     def numberToWords(self, num):
@@ -660,6 +644,28 @@ class Solution(object):
             j -= 1
 
         return True
+
+    # 704
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        l, r = 0, len(nums) - 1
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] == target:
+                return m
+            elif nums[m] < target:
+                l = m + 1
+            else:
+                r = m - 1
+
+        return -1
+
+    # Time complexity: O(logn)
+    # Space complexity: O(1)
 
     # 885
     def spiralMatrixIII(self, rows, cols, rStart, cStart):

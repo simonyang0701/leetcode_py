@@ -260,3 +260,11 @@ def test_regionsBySlashes():
     output = solution.regionsBySlashes(grid)
     print(output)
     assert output == 2
+
+@add_newline_before
+def test_search():
+    nums = [-1, 0, 3, 5, 9, 12]
+    target = 9
+    output = solution.search(nums, target)
+    print(output)
+    assert output == 4
