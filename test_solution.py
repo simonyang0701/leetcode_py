@@ -2,6 +2,7 @@ import pytest
 from Solution import Solution
 from lib.ListNode import *
 from lib.TreeNode import *
+from lib.NestedInteger import *
 
 solution = Solution()
 
@@ -231,3 +232,31 @@ def test_spiralMatrixIII():
     output = solution.spiralMatrixIII(rows, cols, rStart, cStart)
     print(output)
     assert output == [[0,0],[0,1],[0,2],[0,3]]
+
+@add_newline_before
+def test_depthSum():
+    nestedList = list_to_nested_integer([[1, 1], 2, [1, 1]])
+    output = solution.depthSum(nestedList)
+    print(output)
+    assert output == 10
+
+@add_newline_before
+def test_largestNumber():
+    nums = [10, 2]
+    output = solution.largestNumber(nums)
+    print(output)
+    assert output == "210"
+
+@add_newline_before
+def test_validPalindrome():
+    s = "aba"
+    output = solution.validPalindrome(s)
+    print(output)
+    assert output == True
+
+@add_newline_before
+def test_regionsBySlashes():
+    grid = [" /","/ "]
+    output = solution.regionsBySlashes(grid)
+    print(output)
+    assert output == 2

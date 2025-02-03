@@ -5,6 +5,8 @@ from lib.ListNode import *
 from lib.DoublyListNode import *
 from collections import defaultdict, deque
 from lib.TreeNode import *
+from lib.NestedInteger import *
+from functools import cmp_to_key
 
 
 class Solution(object):
@@ -293,6 +295,30 @@ class Solution(object):
             node.prev.next = node.next
             node.next.prev = node.prev
 
+    # 179
+    def largestNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: str
+        """
+
+        def compare(x, y):
+            if x + y > y + x:
+                return -1
+            elif x + y < y + x:
+                return 1
+            else:
+                return 0
+
+        nums_str = list(map(str, nums))
+        nums_str.sort(key=cmp_to_key(compare))
+
+        largest_num = ''.join(nums_str).lstrip('0')
+        return largest_num or '0'
+
+    # Time Complexity: O(nlogn)
+    # Space Complexity: O(n + S)
+
     # 200
     def numIslands(self, grid):
         """
@@ -532,6 +558,26 @@ class Solution(object):
         return result
         # return [columnTable[x] for x in sorted(columnTable.keys())]
 
+    # 339
+    def depthSum(self, nestedList):
+        """
+        :type nestedList: List[NestedInteger]
+        :rtype: int
+        """
+        def dfsdepthSum(nestedList, depth):
+            total = 0
+            for nested in nestedList:
+                if nested.isInteger():
+                    total += nested.getInteger() * depth
+                else:
+                    total += dfsdepthSum(nested.getList(), depth + 1)
+            return total
+
+        return dfsdepthSum(nestedList, 1)
+
+    # Time complexity: O(n)
+    # Space complexity: O(n)
+
     # Time Complexity: O(NlogN)
     # Space Complexity: O(N)
 
@@ -590,6 +636,31 @@ class Solution(object):
                 if target < prefix_sum:
                     return i
 
+    # 680
+    def validPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        def check_palindrome(s, i, j):
+            while i < j:
+                if s[i] != s[j]:
+                    return False
+                i += 1
+                j -= 1
+
+            return True
+
+        i = 0
+        j = len(s) - 1
+        while i < j:
+            if s[i] != s[j]:
+                return check_palindrome(s, i, j - 1) or check_palindrome(s, i + 1, j)
+            i += 1
+            j -= 1
+
+        return True
+
     # 885
     def spiralMatrixIII(self, rows, cols, rStart, cStart):
         """
@@ -623,6 +694,31 @@ class Solution(object):
 
     # Time complexity: O(max(rows, cols)2)
     # Space complexity: O(rows⋅cols)
+
+    # 959
+    def regionsBySlashes(self, grid):
+        """
+        :type grid: List[str]
+        :rtype: int
+        """
+        def dfs(i, j):
+            if min(i, j) < 0 or max(i, j) >= len(g) or g[i][j] != 0:
+                return 0
+            g[i][j] = 1
+            return 1 + dfs(i - 1, j) + dfs(i + 1, j) + dfs(i, j - 1) + dfs(i, j + 1)
+
+        n, regions = len(grid), 0
+        g = [[0] * n * 3 for i in range(n * 3)]
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == '/':
+                    g[i * 3][j * 3 + 2] = g[i * 3 + 1][j * 3 + 1] = g[i * 3 + 2][j * 3] = 1
+                elif grid[i][j] == '\\':
+                    g[i * 3][j * 3] = g[i * 3 + 1][j * 3 + 1] = g[i * 3 + 2][j * 3 + 2] = 1
+        for i in range(n * 3):
+            for j in range(n * 3):
+                regions += 1 if dfs(i, j) > 0 else 0
+        return regions
 
     # 1123
     def lcaDeepestLeaves(self, root):
