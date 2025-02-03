@@ -276,3 +276,10 @@ def test_sum():
     output = solution.sum(num1, num2)
     print(output)
     assert output == 17
+
+@add_newline_before
+def test_findTheLongestSubstring():
+    s = "eleetminicoworoep"
+    output = solution.findTheLongestSubstring(s)
+    print(output)
+    assert output == 13

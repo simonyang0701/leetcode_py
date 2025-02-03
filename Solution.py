@@ -777,6 +777,25 @@ class Solution(object):
 
         return "".join(string_builder)
 
+    # 1371
+    def findTheLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        print(f"s: {s}")
+        vowels = {'a': 1, 'e': 2, 'i': 4, 'o': 8, 'u': 16}
+        d, n, r = {0: -1}, 0, 0
+        for i, c in enumerate(s):
+            if c in vowels:
+                print(f"n: {n}, vowels[c]: {vowels[c]}")
+                n ^= vowels[c]
+            if n not in d:
+                d[n] = i
+            else:
+                r = max(r, i - d[n])
+        return r
+
     # 1644
     def lowestCommonAncestor3(self, root, p, q):
         """
