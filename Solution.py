@@ -471,6 +471,8 @@ class Solution(object):
         :type num: int
         :rtype: str
         """
+        # Time Complexity: O(n)
+        # Space Complexity: O(1)
         if num == 0:
             return "Zero"
 
@@ -509,9 +511,6 @@ class Solution(object):
 
         return result
 
-    # Time Complexity: O(n)
-    # Space Complexity: O(1)
-
     # 314
     def verticalOrder(self, root):
         """
@@ -548,6 +547,8 @@ class Solution(object):
         :type nestedList: List[NestedInteger]
         :rtype: int
         """
+        # Time Complexity: O(NlogN)
+        # Space Complexity: O(N)
         def dfsdepthSum(nestedList, depth):
             total = 0
             for nested in nestedList:
@@ -559,12 +560,6 @@ class Solution(object):
 
         return dfsdepthSum(nestedList, 1)
 
-    # Time complexity: O(n)
-    # Space complexity: O(n)
-
-    # Time Complexity: O(NlogN)
-    # Space Complexity: O(N)
-
     # 408
     def validWordAbbreviation(self, word, abbr):
         """
@@ -572,6 +567,8 @@ class Solution(object):
         :type abbr: str
         :rtype: bool
         """
+        # Time complexity: O(n)
+        # Space complexity: O(1)
         i, j = 0, 0
         m, n = len(word), len(abbr)
         while i < m and j < n:
@@ -590,9 +587,6 @@ class Solution(object):
             else:
                 return False
         return i == m and j == n
-
-    # Time complexity: O(n)
-    # Space complexity: O(1)
 
     # 528
     class SolutionPickIndex(object):
@@ -652,6 +646,8 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
+        # Time complexity: O(logn)
+        # Space complexity: O(1)
         l, r = 0, len(nums) - 1
         while l <= r:
             m = (l + r) // 2
@@ -664,9 +660,6 @@ class Solution(object):
 
         return -1
 
-    # Time complexity: O(logn)
-    # Space complexity: O(1)
-
     # 885
     def spiralMatrixIII(self, rows, cols, rStart, cStart):
         """
@@ -676,6 +669,8 @@ class Solution(object):
         :type cStart: int
         :rtype: List[List[int]]
         """
+        # Time complexity: O(max(rows, cols)2)
+        # Space complexity: O(rows⋅cols)
         dir = [[0, 1], [1, 0], [0, -1], [-1, 0]]
         traversed = []
 
@@ -697,9 +692,6 @@ class Solution(object):
                 direction = (direction + 1) % 4
             step += 1
         return traversed
-
-    # Time complexity: O(max(rows, cols)2)
-    # Space complexity: O(rows⋅cols)
 
     # 959
     def regionsBySlashes(self, grid):
@@ -732,6 +724,8 @@ class Solution(object):
         :type root: Optional[TreeNode]
         :rtype: Optional[TreeNode]
         """
+        # Time complexity: O(n2)
+        # Space complexity: O(n)
 
         def height(node):
             if not node:
@@ -753,16 +747,14 @@ class Solution(object):
 
         return dfs(root)
 
-    # Time complexity: O(n2)
-    # Space complexity: O(n)
-
     # 1249
     def minRemoveToMakeValid(self, s):
         """
         :type s: str
         :rtype: str
         """
-
+        # Time complexity: O(n)
+        # Space complexity: O(n)
         res = set()
         stack = []
 
@@ -785,9 +777,6 @@ class Solution(object):
 
         return "".join(string_builder)
 
-    # Time complexity: O(n)
-    # Space complexity: O(n)
-
     # 1644
     def lowestCommonAncestor3(self, root, p, q):
         """
@@ -796,6 +785,8 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
+        # Time Complexity: O(N)
+        # Space Complexity: O(N)
         self.ans = None
         self.p_found = False
         self.q_found = False
@@ -830,15 +821,14 @@ class Solution(object):
         else:
             return None
 
-    # Time Complexity: O(N)
-    # Space Complexity: O(N)
-
     # 1650
     def lowestCommonAncestor(self, p, q):
         """
         :type node: Node
         :rtype: Node
         """
+        # Time Complexity: O(log(N))
+        # Space Complexity: O(log(N))
         ancestors = set()
 
         def dfs(node):
@@ -853,15 +843,14 @@ class Solution(object):
         b = dfs(q)
         return a or b
 
-    # Time Complexity: O(log(N))
-    # Space Complexity: O(log(N))
-
     # 1676
     def lowestCommonAncestor4(self, root, nodes):
         """
         :type root: TreeNode
         :type nodes: List[TreeNode]
         """
+        # Time Complexity: O(N)
+        # Space Complexity: O(N)
         nodes = set(nodes)
 
         def recurse_tree(node):
@@ -882,9 +871,6 @@ class Solution(object):
 
         return recurse_tree(root)
 
-    # Time Complexity: O(N)
-    # Space Complexity: O(N)
-
     # 1768
     def mergeAlternately(self, word1, word2):
         """
@@ -892,6 +878,8 @@ class Solution(object):
         :type word2: str
         :rtype: str
         """
+        # Time complexity: O(m + n)
+        # Space complexity: O(1)
         result = []
         n = len(word1) + len(word2) + 1
         for i in range(n):
@@ -902,5 +890,11 @@ class Solution(object):
 
         return "".join(result)
 
-    # Time complexity: O(m + n)
-    # Space complexity: O(1)
+    # 2235
+    def sum(self, num1, num2):
+        """
+        :type num1: int
+        :type num2: int
+        :rtype: int
+        """
+        return num1 + num2

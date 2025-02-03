@@ -268,3 +268,11 @@ def test_search():
     output = solution.search(nums, target)
     print(output)
     assert output == 4
+
+@add_newline_before
+def test_sum():
+    num1 = 12
+    num2 = 5
+    output = solution.sum(num1, num2)
+    print(output)
+    assert output == 17
